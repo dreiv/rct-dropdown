@@ -9,6 +9,19 @@ export default class Dropdown extends Component {
 		this.state = { toggled: false }
 	}
 
+	componentDidMount() {
+		document.addEventListener('mousedown', this.handleClickOutside)
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('mousedown', this.handleClickOutside)
+	}
+
+	setWrapperRef = node => {
+		this.wrapperRef = node
+	}
+	wrapperRef = null
+
 	handleToggle = () => {
 		this.setState(prevState => ({ toggled: !prevState.toggled }))
 	}
@@ -18,13 +31,19 @@ export default class Dropdown extends Component {
 		this.setState(prevState => ({ toggled: !prevState.toggled }))
 	}
 
+	handleClickOutside = evt => {
+		if (this.wrapperRef && !this.wrapperRef.contains(evt.target)) {
+			this.setState({ toggled: false })
+		}
+	}
+
 	render() {
 		const { toggled } = this.state
 		const btnText = toggled ? '-' : '+'
 		const ulStyle = !toggled ? { display: 'none' } : null
 
 		return (
-			<React.Fragment>
+			<div ref={this.setWrapperRef}>
 				<button onClick={this.handleToggle}>{btnText}</button>
 				<ul className="items" style={ulStyle}>
 					{data.map(({ name }, idx) => (
@@ -33,7 +52,7 @@ export default class Dropdown extends Component {
 						</li>
 					))}
 				</ul>
-			</React.Fragment>
+			</div>
 		)
 	}
 }

@@ -2,12 +2,7 @@ button {
 	z-index: 1;
 }
 
-button:focus + .items {
-	display: initial;
-}
-
 button + .items {
-	display: none;
 	position: absolute;
 	top: 50%;
 	right: 0;

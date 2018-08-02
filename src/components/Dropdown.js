@@ -32,7 +32,11 @@ export default class Dropdown extends Component {
 	}
 
 	handleClickOutside = evt => {
-		if (this.wrapperRef && !this.wrapperRef.contains(evt.target)) {
+		if (
+			this.state.toggled &&
+			this.wrapperRef &&
+			!this.wrapperRef.contains(evt.target)
+		) {
 			this.setState({ toggled: false })
 		}
 	}
@@ -43,7 +47,7 @@ export default class Dropdown extends Component {
 		const ulStyle = !toggled ? { display: 'none' } : null
 
 		return (
-			<div ref={this.setWrapperRef}>
+			<div ref={this.setWrapperRef} className="wrapper">
 				<button onClick={this.handleToggle}>{btnText}</button>
 				<ul className="items" style={ulStyle}>
 					{data.map(({ name }, idx) => (

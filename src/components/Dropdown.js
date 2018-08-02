@@ -13,8 +13,9 @@ export default class Dropdown extends Component {
 		this.setState(prevState => ({ toggled: !prevState.toggled }))
 	}
 
-	handleClick = evt => {
-		console.log('clicked')
+	handleClick = name => {
+		console.log('clicked: ', name)
+		this.setState(prevState => ({ toggled: !prevState.toggled }))
 	}
 
 	render() {
@@ -27,7 +28,7 @@ export default class Dropdown extends Component {
 				<button onClick={this.handleToggle}>{btnText}</button>
 				<ul className="items" style={ulStyle}>
 					{data.map(({ name }, idx) => (
-						<li key={idx} onClick={this.handleClick}>
+						<li key={idx} onClick={this.handleClick.bind(this, name)}>
 							{name}
 						</li>
 					))}

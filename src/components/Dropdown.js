@@ -44,18 +44,19 @@ export default class Dropdown extends Component {
 	render() {
 		const { toggled } = this.state
 		const btnText = toggled ? '-' : '+'
-		const ulStyle = !toggled ? { display: 'none' } : null
 
 		return (
 			<div ref={this.setWrapperRef} className="wrapper">
 				<button onClick={this.handleToggle}>{btnText}</button>
-				<ul className="items" style={ulStyle}>
-					{data.map(({ name }, idx) => (
-						<li key={idx} onClick={this.handleClick.bind(this, name)}>
-							{name}
-						</li>
-					))}
-				</ul>
+				{toggled && (
+					<ul className="items">
+						{data.map(({ name }, idx) => (
+							<li key={idx} onClick={this.handleClick.bind(this, name)}>
+								{name}
+							</li>
+						))}
+					</ul>
+				)}
 			</div>
 		)
 	}
